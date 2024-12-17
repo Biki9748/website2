@@ -1,0 +1,336 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+.body{
+    background-color: rgb(255, 248, 233);
+}
+.carousel_img{
+    height: 700px;
+}
+.nav-link{
+    position: relative;
+    color: cadetblue;
+}
+.nav-link:hover, .nav-link.active{
+    color: black;
+}
+a{
+    padding-top: 4px;
+    text-decoration: none;
+    color: #650707;
+    float: left;
+}
+a:hover{
+    color: #0a1eb8;
+}
+@media (min-width:991px) {
+    .nav-link::before{
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 0;
+        height: 2px;
+        background-color: rgb(37, 110, 72);
+        visibility: hidden;
+        transition: 0.3 ease-in-out;
+    }
+    .nav-link:hover::before, .nav-link.active::before{
+        width: 100%;
+        visibility: visible;
+    } 
+}
+.card-container .card {
+    width: 250px;
+    height: 60px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    
+}
+.card-container .card-body{
+    height: 60px;
+    width: 250px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color:beige;
+    gap: 8px;
+    border-radius: 6px; 
+}
+.img-wrapper img{
+    height: 280px;
+}
+.author {
+    align-items: center;        /* Center content horizontally */
+    text-align: center;         /* Center text inside the heading */
+    margin-bottom: 45px;
+  }
+.category .card{
+    background-image: url(https://i.pinimg.com/736x/ee/19/48/ee1948d37815668f25c7b00d54cfb79b.jpg); 
+    align-items: center;
+}
+
+ /* Custom styling for testimonial card */
+ .testimonial-card {
+    border-radius: 2%;
+    border: 1px solid rgb(213, 213, 220);
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease;
+    background-color: white;
+    box-shadow: inset;
+  }
+  
+  .testimonial-card:hover {
+    transform: translateY(-20px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+  }
+  
+  .testimonial-card img{
+     border-radius: 50%;
+     margin-bottom: 15px;
+     height: 90px;
+     width: 90px;
+  }
+  .star-rating i {
+    font-size: 18px;
+  }
+  
+  .review p {
+    font-style: italic;
+    font-size: 18px;
+  }
+  
+  footer {
+    font-size: 14px;
+    color: #777;
+  }
+
+/*custom css for footer*/
+.footer {
+    background-color: #222;
+    color: #fff;
+    padding: 40px 0;
+    font-size: 14px;
+}
+.footer h5 {
+    color: #fff;
+    margin-bottom: 20px;
+}
+.footer a {
+    color: #bbb;
+    text-decoration: none;
+}
+.footer a:hover {
+    color: #fff;
+}
+.social-icons i {
+    font-size: 20px;
+    margin-right: 10px;
+    transition: all 0.3s ease;
+}
+.social-icons i:hover {
+    color: #007bff;
+}
+.footer-bottom {
+    text-align: center;
+    padding-top: 20px;
+    font-size: 12px;
+}
+.register-section input {
+    border: 1px solid #ddd;
+    padding: 10px;
+    width: 80%;
+    margin-right: 10px;
+}
+
+
+
+/* css for account pages  */
+/* *{
+    padding: 0;
+    margin: 0;
+  }
+  body {
+      font-family: 'Arial', sans-serif;
+      background-color: #fff8e9;
+      overflow-x: hidden;
+  } */
+    
+    /* side bar section  */
+    .account .sidebar {
+      background-color: cadetblue;
+      color: white;
+    }
+    
+    .account .sidebar .nav-link {
+      color: white;
+    }
+    
+    .account .sidebar .nav-link.active {
+      background-color: aliceblue;
+      color: black;
+      font-weight: 500;
+      border-radius: 5px;
+    }
+  
+    /* navlinks */
+  
+    .account .nav .nav-link:hover{
+      color: #000;
+      font-weight: 500;
+      background-color: aliceblue;
+      border-radius: 5px;
+      margin: 2px 0;
+    }
+    
+    /* main ::content */
+    .account .main-content {
+      background-color: #fff8e9;
+    }
+    
+    .account .current-book {
+      background-image: url('assets/books/livro_da_selva.jpg');
+      background-size: cover;
+      color: white;
+      position: relative;
+    }
+    
+    .account .current-book button {
+      position: absolute;
+      bottom: 10px;
+      left: 10px;
+    }
+    
+    .account .card {
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    
+  
+    .account .profile-image {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background-color: #ccc;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 30px;
+      position: relative;
+      overflow: hidden;
+  }
+  
+  .account .profile-image i {
+      color: #fff;
+  }
+  
+  .account .edit-icon {
+      position: absolute;
+      bottom: 50px;
+      right: 50px;
+      background-color: rgba(37, 37, 37, 0.6);
+      border-radius: 50%;
+      padding: 10px;
+      cursor: pointer;
+      font-size: 10px;
+      color: #fff;
+      display: none;
+  }
+  
+  .account .profile-image:hover .edit-icon {
+      display: block;
+  }
+  
+  @media only screen and (max-width: 768px){
+    .current-book h3{
+      font-size: 15px;
+    }
+    #changeTitleBtn {
+      width: 60px; /* Slightly larger button for medium screens */
+      font-size: 14px; /* Adjust font size for medium screens */
+  }
+  }
+  
+  /* For screens with a maximum width of 480px (mobile phones) */
+  @media only screen and (max-width: 480px) {
+    .account .profile-image {
+        width: 100px;
+        height: 100px;
+    }
+    .account .profile .edit-button, .save-button {
+        width: 80px;
+    }
+    #changeTitleBtn {
+      width: 40px; /* Slightly larger button for medium screens */
+      font-size: 14px; /* Adjust font size for medium screens */
+  }
+  }
+  
+  @media only screen and (max-width: 320px) {
+    .account .profile-image {
+        width: 80px;
+        height: 80px;
+    }
+  }
+  
+  /* Default styles (for larger screens) */
+  .current-book {
+      position: relative;
+  }
+  
+  #changeImageIcon {
+      position: absolute;
+      bottom: 10px;
+      left: 480px;
+      font-size: 15px;
+      color: white;
+      background-color: rgba(95, 158, 160, 0.433);
+      padding: 5px;
+      border-radius: 50%;
+      cursor: pointer;
+  }
+  
+  #changeTitleBtn {
+      position: absolute;
+      bottom: 285px;
+      left: 610px;
+      width: 100px;
+      background-color: cadetblue;
+      font-weight: 500;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 1024px) {
+      #changeImageIcon {
+          bottom: 10px;
+          left: 360px; /* Adjust position for smaller screens */
+      }
+  
+      #changeTitleBtn {
+          bottom: 260px; /* Adjust bottom position */
+          left: 480px; /* Adjust left position */
+      }
+  
+      .btn {
+          bottom: 50px; /* Keep Continue Reading button fixed in place */
+      }
+  }
+  
+  @media (max-width: 768px) {
+      #changeImageIcon {
+          bottom: 10px;
+          left: 250px; /* Adjust further for very small screens */
+      }
+  
+      #changeTitleBtn {
+          bottom: 220px;
+          left: 350px; /* Adjust to fit on smaller screens */
+      }
+  
+      .btn {
+          bottom: 50px; /* Keep Continue Reading button fixed in place */
+      }
+  }
+  
+  

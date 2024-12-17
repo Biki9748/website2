@@ -1,0 +1,1150 @@
+<?php
+include_once("config/config.php");
+include_once(DIR_URL . "config/database.php");
+include_once(DIR_URL . "models/auth.php");
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<meta name="Description" content="Enter your description here"/>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+<!-- font-ws css  -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+<!-- bootstrap css  -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+<!-- <link rel="stylesheet" href="style2.css"> -->
+<title>Library Homepage</title>
+</head>
+
+<style>
+*{
+    padding: 0;
+    margin: 0;
+}
+
+body{
+    background-color: #fff8e9;
+    /* background-color: white; */
+    overflow-x: hidden;
+}
+
+.carousel_img {
+    width: 100%;
+    height: 670px;
+    /* background-size: contain; */
+    object-fit: contain;
+    max-height: 900px; /* Ensure the max height is consistent */
+}
+
+/* Media query for smaller devices (e.g., tablets and smartphones) */
+@media (max-width: 768px) {
+    .carousel_img {
+        max-height: 500px; /* Adjust for smaller screens */
+    }
+}
+
+/* Media query for very small devices (e.g., phones in portrait mode) */
+@media (max-width: 480px) {
+    .carousel_img {
+        max-height: 300px; /* Further adjust for very small screens */
+    }
+}
+
+/* Optional: If you want to limit the number of visible images at once on smaller devices */
+.carousel-inner {
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+}
+
+/* navbar starts  */
+.nav-link{
+    position: relative;
+    color: cadetblue;
+}
+.nav-link:hover, .nav-link.active{
+    color: black;
+}
+a{
+    padding-top: 4px;
+    text-decoration: none;
+    color: #650707;
+    float: left;
+}
+a:hover{
+    color: #0a1eb8;
+}
+@media (min-width:991px) {
+    .nav-link::before{
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 0;
+        height: 2px;
+        background-color: rgb(37, 110, 72);
+        visibility: hidden;
+        transition: 0.3 ease-in-out;
+    }
+    .nav-link:hover::before, .nav-link.active::before{
+        width: 100%;
+        visibility: visible;
+    } 
+}
+
+/* Account Dropdown */
+.dropdown-menu {
+    border-radius: 0.5rem;
+    padding: 10px;
+    right: 30px;
+}
+
+.dropdown-item {
+    color: #5F9EA0;
+}
+
+.dropdown-item:hover {
+    background-color: #5F9EA0;color: white;
+}
+
+/* features starts  */
+.features .card-body img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 50%; /* Maintain circular shape */
+}
+
+/* Ensure cards are centered and responsive */
+.features .card-container .card {
+  text-align: center;
+  border: none; /* Optional: remove card borders */
+  width: 100%; /* Take up 100% width of the column */
+  height: 140px; /* Set a fixed height for all cards */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px; /* Add some space between cards */
+}
+
+/* Responsive grid adjustment */
+.features .card-container .row {
+  display: flex;
+  justify-content: center;
+}
+
+@media (max-width: 768px) {
+  /* Adjust card layout on smaller screens */
+  .features .col-md-4 {
+    flex: 0 0 45%; /* Each card takes 45% width on medium screens */
+    max-width: 45%; /* Limit to 45% */
+    margin: 0 10px; /* Add margin left and right on smaller devices */
+  }
+  .features .col-lg-2 {
+    flex: 0 0 90%; /* Each card takes 90% width on smaller devices */
+    max-width: 90%; /* Limit to 90% */
+    margin: 10px 0; /* Add margin on top and bottom */
+  }
+}
+
+/* Ensure card titles are responsive and centered */
+.features .card-title {
+  font-size: 14px;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+/* features end  */
+
+
+/* categories starts  */
+.categories .card-custom {
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    height: 150px; /* Ensures consistent height for all cards */
+    display: flex;
+    align-items: center; /* Centers content vertically */
+    justify-content: space-between; /* Ensures proper spacing between image and text */
+}
+
+.categories .card-img {
+    width: 150px; /* Consistent width for all images */
+    height: 100%; /* Ensures the image fills the card height */
+    object-fit: cover; /* Ensures proper fit without distortion */
+    border-radius: 10px;
+}
+
+.categories .card-title {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #444;
+}
+
+.categories .btn-custom {
+    border: 1px solid #000;
+    border-radius: 5px;
+    color: #000;
+    font-weight: bold;
+    padding: 8px 16px;
+}
+
+.categories .btn-custom:hover {
+    background-color: #000;
+    color: #fff;
+}
+/* categories ends  */
+
+
+.author {
+  align-items: center;        /* Center content horizontally */
+  text-align: center;         /* Center text inside the heading */
+  margin-bottom: 45px;
+  display: flex;
+  flex-direction: column;     /* Stack image and name vertically */
+  justify-content: center;    /* Center content vertically within the author container */
+}
+
+.author .img-wrapper {
+  width: 80px;                /* Fixed width for the container */
+  height: 80px;               /* Fixed height for the container */
+  overflow: hidden;           /* Hide the overflowed part of the image */
+  border-radius: 50%;         /* Make the image container circular */
+  display: flex;
+  justify-content: center;    /* Center the image inside the container */
+  align-items: center;        /* Center the image inside the container */
+}
+
+.author .img-wrapper img {
+  width: 100%;                /* Make the image take full width of the container */
+  height: 100%;               /* Make the image take full height of the container */
+  object-fit: cover;          /* Ensure the image covers the container without distortion */
+}
+
+.author h5 {
+  margin-top: 10px;           /* Add space between image and name */
+  font-size: 16px;            /* Adjust font size if needed */
+  font-weight: bold;          /* Make the name bold */
+}
+
+
+.category .card{
+  background-image: url(https://i.pinimg.com/736x/ee/19/48/ee1948d37815668f25c7b00d54cfb79b.jpg); 
+  align-items: center;
+}
+
+/* Custom styling for testimonial card */
+/* Style for the customer review section */
+.testimonial-card {
+  text-align: center;
+  border: 1px solid #ddd; /* Optional: Add border to card */
+  border-radius: 10px;     /* Optional: Round the corners of the card */
+  background-color: #f9f9f9;
+}
+
+.testimonial-card img {
+  width: 100px;             /* Make the image responsive */
+  height: 100px;           /* Set a fixed height for the image */
+  object-fit: cover;       /* Ensure the image covers the area without distortion */
+  border-radius: 50%;      /* Make the image circular */
+  margin-bottom: 15px;     /* Space between the image and the rating */
+}
+
+.star-rating i {
+  margin-right: 5px;       /* Add space between the stars */
+}
+
+.review-footer {
+  font-weight: bold;
+  margin-top: 10px;
+  font-size: 14px;
+  color: #333;
+}
+
+
+/* footer starts  */
+
+footer {
+  font-size: 14px;
+  color: #777;
+}
+
+/*custom css for footer*/
+.footer {
+    background-color: #222;
+    color: #fff;
+    padding: 40px 0;
+    font-size: 14px;
+}
+.footer h5 {
+    color: #fff;
+    margin-bottom: 20px;
+}
+.footer a {
+    color: #bbb;
+    text-decoration: none;
+}
+.footer a:hover {
+    color: #fff;
+}
+.social-icons i {
+    font-size: 20px;
+    margin-right: 10px;
+    transition: all 0.3s ease;
+}
+.social-icons i:hover {
+    color: #007bff;
+}
+.footer-bottom {
+    text-align: center;
+    padding-top: 20px;
+    font-size: 12px;
+}
+.register-section input {
+    border: 1px solid #ddd;
+    padding: 10px;
+    width: 80%;
+    margin-right: 10px;
+}
+</style>
+
+
+<body>
+<!--header section-->
+<header>
+  <nav class="navbar navbar-expand-lg fixed-top bg-light" style="height: 60px;">
+      <div class="container-fluid">
+          <a class="navbar-brand me-auto" href="#">
+              <img src="https://static.vecteezy.com/system/resources/thumbnails/024/043/963/small_2x/book-icon-clipart-transparent-background-free-png.png" alt="logo" style="height: 40px; width: 40px;">
+          </a>
+          <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+              <div class="offcanvas-header">
+                  <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Menu</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+              </div>
+              <div class="offcanvas-body">
+                  <ul class="navbar-nav justify-content-center flex-grow-1 pe-3" style="font-size: 15px; font-weight: 700;">
+                      <li class="nav-item">
+                          <a class="nav-link active mx-lg-2" aria-current="page" href="#">Home</a>
+                      </li>
+                      <li class="nav-item">
+                          <a class="nav-link mx-lg-2" href="category.php">Category</a>
+                      </li>
+                      <li class="nav-item">
+                          <a class="nav-link mx-lg-2" href="about.php">About</a>
+                      </li>
+                      <li class="nav-item">
+                          <a class="nav-link mx-lg-2" href="contact.php">Contact Us</a>
+                      </li>
+                  </ul>
+              </div>
+          </div>
+
+          <!-- Login Button (will be replaced after login) -->
+          <a href="login.php" class="btn login-button" id="loginButton" style="color: #5F9EA0;">Login</a>
+
+          <!-- Account Icon with Dropdown (hidden initially) -->
+          <div class="dropdown d-none" id="accountDropdown">
+            <a href="#" class="icon-box" id="accountIcon" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="fa-solid fa-user" style="color: #5F9EA0; margin-right: 10px;"></i>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="accountIcon">
+                <li><a class="dropdown-item" href="profile.php"><i class="fa-solid fa-circle-user" style="margin-right: 10px;"></i>Profile</a></li>
+                <li><a class="dropdown-item" href="account.php"><i class="fa-solid fa-house-user" style="margin-right: 10px;"></i>Account</a></li>
+                <li><a class="dropdown-item" href="wishlist.php"><i class="fa-solid fa-heart" style="margin-right: 10px;"></i>Wish to Read</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="#" onclick="userLogout()">Logout →</a></li>
+            </ul>
+        </div>
+
+          <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+          </button>
+      </div>
+  </nav>
+</header>
+
+
+<!-- Carousel -->
+<div id="carouselExampleFade" class="carousel slide carousel-fade mt-5">
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="assets2/img 1.jpg" class="carousel_img d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="assets2/img 2.jpg" class="carousel_img d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="assets2/img 3.jpg" class="carousel_img d-block w-100" alt="...">
+    </div>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+
+ 
+
+ <!-- Features Section -->
+<div class="card-container mt-4 features">
+  <div class="row justify-content-center">
+      <div class="col-md-4 col-lg-2 mb-2 d-flex"> <!-- Easy Reservation -->
+          <div class="card w-100 d-flex">
+              <div class="card-body d-flex flex-column">
+                <img src="https://cdn4.iconfinder.com/data/icons/marketing-and-digital-marketing/32/business_marketing_advertising_event_calendar-48-512.png" alt="Easy Reservation">
+                <div class="text-content">
+                    <h5 class="card-title">Easy Reservation</h5>
+                </div>
+              </div>
+          </div>
+      </div>
+
+      <div class="col-md-4 col-lg-2 mb-2 d-flex"> <!-- Automatic Renewals -->
+          <div class="card w-100 d-flex">
+              <div class="card-body d-flex flex-column">
+                  <img src="data:image/jpeg;base64,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XUsqGZXalkRawMdYEONzbbyLxMew6TGcWrcSZMyBtSIPwT2GRzDHE2I9kCBwcSTq7MxjqVq01yYxhzmK1E1XiNdUyy08skrwXvpWBkJIa0dg0LTbvhe5uaqO/YvIu6SqNG5wQevYvIv6SUaqzTTFPV4Uo0tymmIw8VF7m52bvyLyL+km52bvyLyL+kr7yz9y22ucJJ6nfwWo/wBdxP7Q5dco+0bxduAYVBhj6c1Lo56mYyslEQOukMlspa47L8a9jdhF4OfzkezVd3Z+5bb3OHUouW3YReDn85Hs03YReDn85Hs03dn7k7e5w6ob7eUelZVyI0wiuD7mv2G/4yPZqu7Jvg8+XHRUTrLPJtrnDjNZL3tU+Rl6KayXvap8jL0VMapZauxjlm3s8Id1kve1T5GXoprJe9qnyMvRUxqibGOTezwh3WS97VPkZeimsl72qfIy9FTEibGOTezwh3WS97VPkZeimsl72qfIy9FTEibCnk3s8Id1kve1T5GXoprJu9qnyMvRUxImxp5N7PCHdZL3tU+Rl6KayXvap8jL0VMVlVNjHJvZ4Q5rJe9qnyMvRTWS97VPkZeipiSybGOTezwh3WS97VPkZeimeXvap8jL0VMSWTYU8m9nhDueXvap8jL0Uzy97VPkZeipjVE2FPJvZ4Q7nl72qfIy9FM8ve1T5GXoqYksmwp5N7PCHc8ve1T5GXopnl72qfIy9FTElk2FPJvZ4Q7nl72qPIy9FM8ve1T5GXoqYksmwp5N7PCHc8ve1T5GXopnl72qfIy9FTEibCnk3s8Idzy97VPkZeimeXvap8jL0VMapZNhTyb2eEO6yXvap8jL0U1kve1T5GXoqYrJZNjHJvZ4Q7rJe9qnyMvRTWS97VPkZeipisqpsKeTezwhzWS97VPkZeimsl72qfIy9FTEibGOTezwh3WS97VPkZeimeXvap8jL0VMSJsY5N7PCHc8ve1T5GXopnl72qfIy9FTEibGOTezwh3WS97VPkZeimsl72qfIy9FTElk2Mcm9nhDusl72qfIy9FNZL3tU+Rl6KmNUsmxjk3s8Id1kve1T5GXorJlq+9KnyL+ipfRNjHKN7VwIiLpNEREQEREBERAREQEREBERAREQEREBERAREQEREBERAROJEBERAREQEREBERAREQEREBERARFVBRERAREQEREBERAREQEREBERAREQEREBERAREQEREBERA4kTiRAREQEREBERAREQEREBERAREQFVUVUH//Z" alt="Automatic Renewals">
+                  <div class="text-content">
+                      <h5 class="card-title">Automatic Renewals</h5>
+                  </div>
+              </div>
+          </div>
+      </div>
+
+      <div class="col-md-4 col-lg-2 mb-2 d-flex"> <!-- Feature 3 -->
+          <div class="card w-100 d-flex">
+              <div class="card-body d-flex flex-column">
+                <img src="https://th.bing.com/th/id/OIP.xd4TJ4o48R8E5dxYINcTkAHaHa?w=186&h=186&c=7&r=0&o=5&dpr=1.6&pid=1.7" alt="Real Time Availability Update">
+                <div class="text-content">
+                    <h5 class="card-title">Real Time Availability Update</h5>
+                </div>
+              </div>
+          </div>
+      </div>
+
+      <div class="col-md-4 col-lg-2 mb-2 d-flex"> <!-- Feature 3 -->
+          <div class="card w-100 d-flex">
+              <div class="card-body d-flex flex-column">
+                <img src="https://th.bing.com/th/id/OIP.sicabs683fqwCp1M1Iz-ZAAAAA?rs=1&pid=ImgDetMain" alt="Personalized Recommendations">
+                <div class="text-content">
+                    <h5 class="card-title">Personalized Recommendations</h5>
+                </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+
+<!--Category-->
+<div class="container mt-4" id="category">
+  <div class="heading">
+      <p style="color: red;font-weight: 700;"><small>TOP CATEGORIES</small></p>
+      <div class="inner-heading d-flex">
+          <h2 class="flex-grow-1">Explore Categories</h2>
+          <a href="category.php">ViweAll</a>
+      </div>
+      <hr>
+  </div>
+      <div class="row mt-2 justify-content-center">
+          <div class="col-md-4 col-lg-3 mb-2"> <!--c1-->
+              <div class="category">
+                  <div class="card">
+                      <div class="card-body">
+                          <a href="index.php#trending"><b>Trending</b></a>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="col-md-4 col-lg-3 mb-2"> <!--c2-->
+              <div class="category">
+                  <div class="card">
+                      <div class="card-body">
+                          <a href="index.php#popular"><b>Popular</b></a>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="col-md-4 col-lg-3 mb-2"> <!--c3-->
+              <div class="category">
+                  <div class="card">
+                      <div class="card-body">
+                          <div class="text-content">
+                              <a href="index.php#drama&poetry"><b>Drama & Poetry</b></a>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="col-md-4 col-lg-3 mb-2"> <!--c4-->
+              <div class="category">
+                  <div class="card">
+                      <div class="card-body">
+                          <a href="category.php#childernfiction"><b>Children's Fiction</b></a>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="col-md-4 col-lg-3 mb-2"> <!--c5-->
+              <div class="category">
+                  <div class="card">
+                      <div class="card-body">
+                          <a href="category.php#mystry/thriller"><b>Mystery/Thriller</b></a>
+                       </div>
+                  </div>
+              </div>
+          </div>
+          <div class="col-md-4 col-lg-3 mb-2"> <!--c6-->
+              <div class="category">
+                  <div class="card">
+                      <div class="card-body">
+                          <a href="category.php#horror"><b>Horror</b></a>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="col-md-4 col-lg-3 mb-2"> <!--c7-->
+              <div class="category">
+                  <div class="card">
+                      <div class="card-body">
+                          <a href="category.php#romance"><b>Romance</b></a>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="col-md-4 col-lg-3 mb-2"> <!--c8-->
+              <div class="category">
+                  <div class="card">
+                      <div class="card-body">
+                          <a href="category.php#youngadult"><b>Young Adult(YA)</b></a>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+</div>
+
+<!--Trending books-->
+<div class="container mt-5" id="trending">
+  <div class="container shadow bg-body-secondary p-2 d-flex">
+      <h3 class="flex-grow-1" style="font-style: italic;">What's in Trend</h3>
+      <a href="#">View All</a><hr>
+  </div>
+  <div class="row justify-content-center mt-3">
+      <div class="col-md-4 col-lg-2"><!--book1-->
+          <div class="card mb-3 d-flex flex-column">
+              <div class="img-wrapper" style="flex-grow: 1;">
+                <img src="https://i.pinimg.com/736x/27/fb/51/27fb517947c62624f7208ce1cea4f083.jpg" class="card-img-top" alt="...">
+              </div>
+              <div class="card-body d-flex flex-column">
+                <p><b>Verity</b><br>by Colleen Hoover</p>
+                <div class="btn btn-outline-dark">Read</div>
+              </div>
+            </div> 
+      </div>
+      <div class="col-md-4 col-lg-2"><!--book2-->
+          <div class="card mb-3 d-flex flex-column">
+              <div class="img-wrapper" style="flex-grow: 1;">
+                <img src="https://i.pinimg.com/736x/12/26/7d/12267d53e8fd8ee5e45f163a0a0608be.jpg" class="card-img-top" alt="...">
+              </div>
+              <div class="card-body d-flex flex-column">
+                <p><b>The Lost House</b><br>by Melissa Larsen</p>
+                <div class="btn btn-outline-dark">Read</div>
+              </div>
+            </div> 
+      </div>
+      <div class="col-md-4 col-lg-2"><!--book3-->
+        <div class="card mb-3 d-flex flex-column">
+            <div class="img-wrapper" style="flex-grow: 1;">
+              <img src="https://i.pinimg.com/736x/74/cf/7d/74cf7d6d4f1c45c5f0f718db6a00d5f2.jpg" class="card-img-top" alt="...">
+            </div>
+            <div class="card-body d-flex flex-column">
+              <p><b>Archer's Voice</b><br>by Mia Sheridan</p>
+                <div class="btn btn-outline-dark">Read</div>
+            </div>
+          </div> 
+      </div>
+      <div class="col-md-4 col-lg-2"><!--book4-->
+          <div class="card mb-3 d-flex flex-column">
+            <div class="img-wrapper" style="flex-grow: 1;">
+              <img src="https://i.pinimg.com/736x/ff/f0/fe/fff0fe3ad2d2cc44ecc75bdc6960cfa2.jpg" class="card-img-top" alt="...">
+            </div>
+              <div class="card-body d-flex flex-column">
+                <p><b>Twisted Lies</b><br>by Ana Haung</p>
+                <div class="btn btn-outline-dark">Read</div>
+              </div>
+            </div> 
+      </div>
+      <div class="col-md-4 col-lg-2"><!--book5-->
+          <div class="card mb-3 d-flex flex-column">
+              <div class="img-wrapper" style="flex-grow: 1;">
+                <img src="https://i.pinimg.com/736x/88/d1/bc/88d1bcc547472575eb71d891f2e43b74.jpg" class="card-img-top" alt="...">
+              </div>
+              <div class="card-body d-flex flex-column">
+                <p><b>The Hating Game</b><br>by Sally Throne</p>
+                <div class="btn btn-outline-dark">Read</div>
+              </div>
+            </div> 
+      </div>
+      <div class="col-md-4 col-lg-2"><!--book6-->
+        <div class="card mb-3 d-flex flex-column">
+            <div class="img-wrapper" style="flex-grow: 1;">
+              <img src="https://i.pinimg.com/736x/c4/6a/ed/c46aed1ca87f97bbf8543d8c4e080245.jpg" class="card-img-top" alt="...">
+            </div>
+            <div class="card-body d-flex flex-column">
+              <p><b>The Chamber</b><br>by Will Dean</p>
+                <div class="btn btn-outline-dark">Read</div>
+            </div>
+          </div> 
+      </div>
+  </div>
+</div> 
+
+
+<!--Featured books-->
+<div class="container mt-3">
+    <div class="heading" style="text-align: center;">
+        <p style="color: red; font-style: oblique; font-weight: 700;"><small>FEATURED BOOK</small></p>
+        <h2>What Will You Discover?</h2><hr>
+    </div>
+    <div class="row mt-3">
+        <div class="col-lg-3 col-md-3 mb-2"><!--section1-->
+            <div class="card align-items-center" style="background-image: url(https://i.pinimg.com/736x/52/3d/73/523d73701befa3787ec1f8606d40d4d8.jpg); background-size: cover; height: 150px;">
+                <div class="card-body">
+                    <h4 class="pt-2" style="font-family:Georgia, 'Times New Roman', Times, serif;">Self-Help</h4>
+                    <div class="btn btn-outline-secondary mt-3 ">Explore</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-3 mb-2"><!--section2-->
+            <div class="card align-items-center" style="background-image: url(https://tse1.mm.bing.net/th?id=OIP.l4cqSz7lDpqpS3eNLseYAQHaDL&pid=Api&P=0&h=180); background-size: cover; color: white; height: 150px;">
+                <div class="card-body">
+                    <h4 class="pt-2" style="font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Business</h4>
+                    <div class="btn btn-outline-light mt-3">Explore</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-3 mb-2"><!--section3-->
+            <div class="card align-items-center" style="background-image:url(https://th.bing.com/th/id/OIP.HggvuI3RSafUqYf-DV-jFQHaHa?rs=1&pid=ImgDetMain); color: white; background-size: cover; height: 150px;">
+                <div class="card-body">
+                    <h4 class="pt-2" style="font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;">Programming</h4>
+                    <div class="btn btn-outline-light mt-3">Explore</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-3 mb-2"><!--section4-->
+            <div class="card align-items-center" style="background-image: url(https://tse3.mm.bing.net/th?id=OIP.nuujgudLkh0_f93Zqo_O_AAAAA&pid=Api&P=0&h=180); color: white; background-size: cover; height: 150px;">
+                <div class="card-body">
+                    <h4 class="pt-2" style="font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;">Financial</h4>
+                    <div class="btn btn-outline-light mt-3 pl-5">Explore</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Popular books-->
+<div class="container mt-5" id="popular">
+  <div class="container shadow bg-body-secondary p-2 d-flex">
+      <h3 class="flex-grow-1" style="font-style: italic;">Popular Books</h3>
+      <a href="#">View All</a><hr>
+  </div>
+  <div class="row justify-content-center mt-4">
+      <div class="col-md-4 col-lg-2"><!--book1-->
+          <div class="card mb-3 ">
+              <div class="img-wrapper">
+                <img src="https://blackwells.co.uk/jacket/l/9780099511021.jpg" class="card-img-top" alt="...">
+              </div>
+              <div class="card-body">
+                <p><b>Educated</b><br> by Tara Westover</p>
+                <div class="btn btn-outline-dark">Read</div>
+              </div>
+            </div> 
+      </div>
+      <div class="col-md-4 col-lg-2 "><!--book2-->
+          <div class="card mb-3">
+              <div class="img-wrapper">
+                <img src="https://www.abramsbooks.com/cover_images/1/9781419731501_s3.jpg" class="card-img-top" alt="...">
+              </div>
+              <div class="card-body">
+                <p><b>Dune</b><br>by Frank Herbert</p>
+                <div class="btn btn-outline-dark">Read</div>
+              </div>
+            </div> 
+      </div>
+      <div class="col-md-4 col-lg-2"><!--book3-->
+        <div class="card mb-3">
+            <div class="img-wrapper">
+              <img src="https://i.thenile.io/r1000/9780471445500.jpg?r=5ea2b271b97fa" class="card-img-top" alt="...">
+            </div>
+            <div class="card-body">
+              <p><b>Common Stocks and Uncommon Profits</b><br>by Philip Fisher</p>
+                <div class="btn btn-outline-dark">Read</div>
+            </div>
+          </div> 
+      </div>
+      <div class="col-md-4 col-lg-2 "><!--book4-->
+          <div class="card mb-3">
+            <div class="img-wrapper">
+              <img src="https://i.ebayimg.com/images/g/IIEAAOSwOnVg4zQw/s-l500.jpg" class="card-img-top" alt="...">
+            </div>
+              <div class="card-body">
+                <p><b>You Are a Badass at Making Money</b><br>by Jen Sincero</p>
+                <div class="btn btn-outline-dark">Read</div>
+              </div>
+            </div> 
+      </div>
+      <div class="col-md-4 col-lg-2 "><!--book5-->
+          <div class="card mb-3">
+              <div class="img-wrapper">
+                <img src="https://www.betterreading.com.au/wp-content/uploads/2014/08/Untitled-design-20.png" class="card-img-top" alt="...">
+              </div>
+              <div class="card-body">
+                <p><b>Big Little Lies</b><br>by Liane Moriarty</p>
+                <div class="btn btn-outline-dark">Read</div>
+              </div>
+            </div> 
+      </div>
+      <div class="col-md-4 col-lg-2"><!--book6-->
+        <div class="card mb-3">
+            <div class="img-wrapper">
+              <img src="https://imgv2-2-f.scribdassets.com/img/word_document/163569726/original/528448ac16/1580812483?v=1" class="card-img-top" alt="...">
+            </div>
+            <div class="card-body">
+              <p><b>The Song of Achilles</b><br>by Madeline Miller</p>
+                <div class="btn btn-outline-dark">Read</div>
+            </div>
+          </div> 
+      </div>
+      <div class="col-md-4 col-lg-2"><!--book7-->
+          <div class="card mb-3 ">
+              <div class="img-wrapper">
+                <img src="https://i.pinimg.com/originals/1c/47/a3/1c47a32feb1697772e5affdd23fab88a.jpg" class="card-img-top" alt="...">
+              </div>
+              <div class="card-body">
+                <p><b>The Da Vinci Code</b><br>by Dan Brown</p>
+                <div class="btn btn-outline-dark">Read</div>
+              </div>
+            </div> 
+      </div>
+      <div class="col-md-4 col-lg-2 "><!--book8-->
+          <div class="card mb-3">
+              <div class="img-wrapper">
+                <img src="https://i.pinimg.com/564x/00/ba/3e/00ba3e9d25bacbf5491b67b4fb19195a.jpg" class="card-img-top" alt="...">
+              </div>
+              <div class="card-body">
+                <p><b>Boomerang</b><br>by Rob Wiggins</p>
+                <div class="btn btn-outline-dark">Read</div>
+              </div>
+            </div> 
+      </div>
+      <div class="col-md-4 col-lg-2"><!--book9-->
+        <div class="card mb-3">
+            <div class="img-wrapper">
+              <img src="https://i.thenile.io/r1000/9780452262935.jpg?r=5e7d61110b596" class="card-img-top" alt="...">
+            </div>
+            <div class="card-body">
+              <p><b>1984</b><br>by George Orwell</p>
+                <div class="btn btn-outline-dark">Read</div>
+            </div>
+          </div> 
+      </div>
+      <div class="col-md-4 col-lg-2 "><!--book10-->
+          <div class="card mb-3">
+            <div class="img-wrapper">
+              <img src="https://s.yimg.com/fz/api/res/1.2/_uio9swbw8vn4wNRkCvE6g--~C/YXBwaWQ9c3JjaGRkO2ZpPWZpdDtoPTI2MDtxPTgwO3c9MTc4/https://s.yimg.com/zb/imgv1/017e590c-e46f-31a0-a0b5-4efbd3159815/t_500x300" class="card-img-top" alt="...">
+            </div>
+              <div class="card-body">
+                <p><b>The Girl with the Dragon Tattoo</b><br>by Stieg Larsson</p>
+                <div class="btn btn-outline-dark">Read</div>
+              </div>
+            </div> 
+      </div>
+      <div class="col-md-4 col-lg-2 "><!--book11-->
+          <div class="card mb-3">
+              <div class="img-wrapper">
+                <img src="http://ecx.images-amazon.com/images/I/51es1dfIB%2BL._SY344_BO1,204,203,200_.jpg" class="card-img-top" alt="...">
+              </div>
+              <div class="card-body">
+                <p><b>The Millionaire Next Door</b><br>by Thomas J. Stanley</p>
+                <div class="btn btn-outline-dark">Read</div>
+              </div>
+            </div> 
+      </div>
+      <div class="col-md-4 col-lg-2"><!--book12-->
+        <div class="card mb-3">
+            <div class="img-wrapper">
+              <img src="https://cdn.kobo.com/book-images/2900da46-71e0-42aa-b9a9-e83dabbc6de4/1200/1200/False/one-of-us-is-lying.jpg" class="card-img-top" alt="...">
+            </div>
+            <div class="card-body">
+              <p><b>One of Us Is Lying</b><br>by Karen M. McManus</p>
+                <div class="btn btn-outline-dark">Read</div>
+            </div>
+          </div> 
+      </div>
+  </div>
+</div>
+
+<!--holiday gift guide-->
+<div class="card align-items-center mt-4" style="background-image: url('https://i.pinimg.com/736x/b0/69/29/b06929b54b1d9309926f52f83bcaae25.jpg'); background-size: cover; height: 250px;">
+  <div class="card-body d-flex">
+    <div class="card-text pt-4">
+        <h4 class="card-title">Personalized Holiday Gift Guide</h4>
+        <p>For Loved ones and Family</p>
+        <a href="#" class="btn btn-outline-secondary">Register Now</a>
+    </div>
+    <div class="card-img">
+        <img src="https://i.pinimg.com/control2/736x/42/e3/fa/42e3fa16102b8a291a67a50f9c4fa9a0.jpg" style="height: 230px; border-radius: 20px; padding-bottom: 10px;">
+    </div>
+  </div>
+</div>
+
+<!--Drama & Poetry-->
+<div class="container mt-5" id="drama&poetry">
+  <div class="container shadow bg-body-secondary p-2 d-flex">
+      <h4 class="flex-grow-1" style="font-style: italic;">Drama & Poetry</h4>
+      <a href="#">View All</a><hr>
+  </div>
+  <div class="row justify-content-center mt-3">
+      <div class="col-md-4 col-lg-2"><!--book1-->
+          <div class="card mb-3 ">
+              <div class="img-wrapper">
+                <img src="https://i.pinimg.com/736x/50/9c/73/509c735e0518adc87c293b59af74c560.jpg" class="card-img-top" alt="...">
+              </div>
+              <div class="card-body">
+                <p><b>Sadhana</b><br>by Rabindranath Tagore</p>
+                <div class="btn btn-outline-dark">Read</div>
+              </div>
+            </div> 
+      </div>
+      <div class="col-md-4 col-lg-2 "><!--book2-->
+          <div class="card mb-3">
+              <div class="img-wrapper">
+                <img src="https://i.pinimg.com/736x/2c/1f/b4/2c1fb443a53b4d0d8e74b29f6abb4690.jpg" class="card-img-top" alt="...">
+              </div>
+              <div class="card-body">
+                <p><b>Adventures of Huckleberry Finn</b><br>by Mark Twain</p>
+                <div class="btn btn-outline-dark">Read</div>
+              </div>
+            </div> 
+      </div>
+      <div class="col-md-4 col-lg-2"><!--book3-->
+        <div class="card mb-3">
+            <div class="img-wrapper">
+              <img src="https://i.pinimg.com/736x/c8/a5/5d/c8a55d16fa739589252e5e10829e1f0f.jpg" class="card-img-top" alt="...">
+            </div>
+            <div class="card-body">
+              <p><b>Emma</b><br>by Jane Austen</p>
+                <div class="btn btn-outline-dark">Read</div>
+            </div>
+          </div> 
+      </div>
+      <div class="col-md-4 col-lg-2 "><!--book4-->
+          <div class="card mb-3">
+            <div class="img-wrapper">
+              <img src="https://i.pinimg.com/736x/5b/69/f9/5b69f94ac92ac0d27622843476a0b9e3.jpg" class="card-img-top" alt="...">
+            </div>
+              <div class="card-body">
+                <p><b>Great Expectations</b><br>by Charles Dickens</p>
+                <div class="btn btn-outline-dark">Read</div>
+              </div>
+            </div> 
+      </div>
+      <div class="col-md-4 col-lg-2 "><!--book5-->
+          <div class="card mb-3">
+              <div class="img-wrapper">
+                <img src="https://ds.rokomari.store/rokomari110/ProductNew20190903/260X372/Raktakarabi-Rabindranath_Tagore-1ec8d-276319.jpg" class="card-img-top" alt="...">
+              </div>
+              <div class="card-body">
+                <p><b>Raktakarabi</b><br>by Rabindranath Tagore</p>
+                <div class="btn btn-outline-dark">Read</div>
+              </div>
+            </div> 
+      </div>
+      <div class="col-md-4 col-lg-2"><!--book6-->
+        <div class="card mb-3">
+            <div class="img-wrapper">
+              <img src="https://d28hgpri8am2if.cloudfront.net/book_images/onix/cvr9781625589064/paradise-lost-9781625589064_hr.jpg" class="card-img-top" alt="...">
+            </div>
+            <div class="card-body">
+              <p><b>Paradise Lost</b><br>by John Milton</p>
+                <div class="btn btn-outline-dark">Read</div>
+            </div>
+          </div> 
+      </div>
+  </div>
+</div>
+
+<!--categories-->
+<div class="categories container py-5">
+  <div class="row g-4">
+      <!-- Card 1 -->
+      <div class="col-md-4">
+          <div class="card card-custom d-flex flex-row align-items-center p-3" style="background-color: #eceef0;">
+              <div class="card-body">
+                  <h5 class="card-title">Top Books</h5>
+                  <button class="btn btn-custom">View More</button>
+              </div>
+              <img src="https://i.pinimg.com/736x/ab/d0/e3/abd0e3e559ea508d6c944abcf7aa70a2.jpg" alt="New Arrivals" class="card-img">
+          </div>
+      </div>
+      <!-- Card 2 -->
+      <div class="col-md-4">
+          <div class="card card-custom d-flex flex-row align-items-center p-3" style="background-color: #e1b39b;">
+              <div class="card-body">
+                  <h5 class="card-title">New Arrivals</h5>
+                  <button class="btn btn-custom">View More</button>
+              </div>
+              <img src="https://i.pinimg.com/736x/91/9d/ad/919dad52c0f041b6442c8b452bd6111a.jpg" alt="New Arrivals" class="card-img">
+          </div>
+      </div>
+      <!-- Card 3 -->
+      <div class="col-md-4">
+          <div class="card card-custom d-flex flex-row align-items-center p-3" style="background-color: #e6dae5;">
+              <div class="card-body">
+                  <h5 class="card-title">Audiobooks</h5>
+                  <button class="btn btn-custom">View More</button>
+              </div>
+              <img src="https://i.pinimg.com/236x/85/2e/37/852e378c54f968c5db19037f22c3f3ab.jpg" alt="New Arrivals" class="card-img">
+          </div>
+      </div>
+  </div>
+</div>
+
+
+<!--nothing just to add some colors-->
+<div class="card align-items-center mt-5" style="background-image: url(https://i.pinimg.com/736x/0c/c4/52/0cc45206866bec09a2d54948d7506b47.jpg); height: 230px;">
+  <div class="card-body">
+      <div class="card-text mt-5" style="color: white;">
+          <h3>A Reader lives a thousand lives before he dies...</h3>
+          <h3>The man who never reads lives only once</h3>
+      </div>
+  </div>
+</div>
+
+<!--top author-->
+  <div class="container mt-4 ">
+    <div class="container shadow bg-body-secondary">
+        <h4 style="padding: 8px; text-align: center;">Top Authors</h4><hr>
+    </div>
+    <div class="row justify-content-center mt-3">
+        <div class="col-md-4 col-lg-2"><!--autor1-->
+         <div class="author">
+                <div class="img-wrapper">
+                    <img src="https://4.bp.blogspot.com/-zvG5pf_2I_w/Whulq4mfGfI/AAAAAAAAIyw/xuTq_tjwGa81zGeDhSKdd-O84KMOSM9uwCLcBGAs/s1600/252361-ruskin-bond.jpg" alt="Ruskin Bond" style="height: 80px;  width: 80px; border-radius: 50%;">
+                </div>
+                <h5>Ruskin Bond</h5>
+         </div>
+        </div>
+        <div class="col-md-4 col-lg-2 "><!--author2-->
+            <div class="author">
+                    <div class="img-wrapper">
+                        <img src="https://marriedbiography.com/wp-content/uploads/2020/07/Dan-Brown-1.jpg" alt="Dan brown" style="height: 80px;  width: 80px; border-radius: 50%;">
+                    </div>
+                    <h5>Dan Brown</h5>
+             </div>
+        </div>
+        <div class="col-md-4 col-lg-2"><!--author3-->
+            <div class="author">
+                    <div class="img-wrapper">
+                        <img src="https://www.pantarhei.sk/media/panta/authors/ana-huang-author-image.jpg" alt="Ana Haung" style="height: 80px;  width: 80px; border-radius: 50%;">
+                    </div>
+                    <h5>Ana Haung</h5>
+             </div>
+        </div>
+        <div class="col-md-4 col-lg-2 "><!--author4-->
+            <div class="author">
+                    <div class="img-wrapper">
+                        <img src="https://m.media-amazon.com/images/S/amzn-author-media-prod/ahse0tp739j3akippqba48p3um._SX450_.jpg" alt="Colleen Hoover" style="height: 80px;  width: 80px; border-radius: 50%;">
+                    </div>
+                    <h5>Colleen Hoover</h5>
+             </div>
+        </div>
+        <div class="col-md-4 col-lg-2 "><!--author5-->
+            <div class="author">
+                    <div class="img-wrapper">
+                        <img src="https://hiddenforces.io/wp-content/uploads/2021/12/HF-Ep225-Ryan-Holiday-768x768.jpg" alt="Ryan Holiday" style="height: 80px;  width: 80px; border-radius: 50%;">
+                    </div>
+                    <h5>Ryan Holiday</h5>
+             </div>
+        </div>
+        <div class="col-md-4 col-lg-2"><!--author 6-->
+            <div class="author">
+                    <div class="img-wrapper">
+                        <img src="https://images-na.ssl-images-amazon.com/images/I/81LKZj5X6lL.jpg" alt="James Clear" style="height: 80px;  width: 80px; border-radius: 50%;">
+                    </div>
+                    <h5>James Clear</h5>
+             </div>
+        </div>
+    </div>
+  </div>
+
+  <!--customer review-->
+  <div class="container mt-3" style="border-radius: 10px;">
+    <div class="review_heading p-2 mb-2">
+      <h3 style="font-style: italic; text-align: center;">What Our Customers Say</h3><hr>
+    </div>
+        <div class="row text-center">
+          <!-- Testimonial 1 -->
+          <div class="col-md-4 mb-4">
+            <div class="testimonial-card p-4 ">
+              <img src="https://media.istockphoto.com/photos/young-woman-portrait-in-the-city-picture-id1009749608?k=6&m=1009749608&s=612x612&w=0&h=ckLkBgedCLmhG-TBvm48s6pc8kBfHt7Ppec13IgA6bo=" alt="Customer 1">
+              <div class="star-rating mb-3">
+                <i class="fas fa-star" style="color: #FFD43B;"></i>
+                <i class="fas fa-star" style="color: #FFD43B;"></i>
+                <i class="fas fa-star" style="color: #FFD43B;"></i>
+                <i class="fas fa-star" style="color: #FFD43B;"></i>
+                <i class="far fa-star-half" style="color: #FFD43B;"></i>
+              </div>
+              <div class="review">
+                <p>"This service was absolutely fantastic! Highly recommend."</p>
+              </div>
+              <footer class="review-footer">Anita Hazra</footer>
+            </div>
+          </div>
+          
+          <!-- Testimonial 2 -->
+          <div class="col-md-4 mb-4">
+            <div class="testimonial-card p-4 ">
+              <img src="https://tse1.mm.bing.net/th?id=OIP.AwGBn0RaiFXEpXemdj-2LQHaLG&pid=Api&P=0&h=180" alt="Customer 2">
+              <div class="star-rating mb-3">
+                <i class="fas fa-star" style="color: #FFD43B;"></i>
+                <i class="fas fa-star" style="color: #FFD43B;"></i>
+                <i class="fas fa-star" style="color: #FFD43B;"></i>
+                <i class="fas fa-star" style="color: #FFD43B;"></i>
+                <i class="fas fa-star" style="color: #FFD43B;"></i>
+              </div>
+              <div class="review">
+                <p>"Incredible experience. Exceeded all expectations."</p>
+              </div>
+              <footer class="review-footer">Susmita Singh</footer>
+            </div>
+          </div>
+    
+          <!-- Testimonial 3 -->
+          <div class="col-md-4 mb-4">
+            <div class="testimonial-card p-4 ">
+              <img src="https://www.allprodad.com/wp-content/uploads/2021/03/05-12-21-happy-people.jpg" alt="Customer 3">
+              <div class="star-rating mb-3">
+                <i class="fas fa-star" style="color: #FFD43B;"></i>
+                <i class="fas fa-star" style="color: #FFD43B;"></i>
+                <i class="fas fa-star" style="color: #FFD43B;"></i>
+                <i class="fas fa-star" style="color: #FFD43B;"></i>
+              </div>
+              <div class="review">
+                <p>"Very good, but there's still room for improvement."</p>
+              </div>
+              <footer class="review-footer">Rita Das</footer>
+            </div>
+          </div>
+        </div>
+  </div>
+  
+
+  <!--footer-->
+  <footer class="footer mt-3">
+    <div class="container">
+        <div class="row">
+            <!-- Contact Section -->
+            <div class="col-md-4">
+                <h5>Contact</h5>
+                <p>123 Digital St, Suite 456, City, Country</p>
+                <p>Phone: +1 234 567 890</p>
+                <p>Email: info@company.com</p>
+            </div>
+            <!-- Social Media Section -->
+            <div class="col-md-4">
+                <h5>Follow Us</h5>
+                <div class="social-icons">
+                    <a href="https://facebook.com" target="_blank"><i class="fab fa-facebook"></i></a>
+                    <a href="https://twitter.com" target="_blank"><i class="fab fa-twitter"></i></a>
+                    <a href="https://linkedin.com" target="_blank"><i class="fab fa-linkedin"></i></a>
+                    <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+            <!-- Register Section -->
+            <div class="col-md-4">
+                <h5>Register</h5>
+                <p>Subscribe to our newsletter</p>
+                <div class="register-section">
+                    <input type="email" id="email" placeholder="Enter your email" required>
+                    <div class="btn btn-outline-light mt-3" onclick="subscribe()">Subscribe</div>
+                </div>
+            </div>
+        </div>
+    </div>
+  
+    <!-- Footer Bottom Section -->
+    <div class="footer-bottom">
+        <p>&copy; 2024 Company Name. All Rights Reserved.</p>
+    </div>
+  </footer>
+  
+  
+  
+  <!-- JavaScript for Register Subscription -->
+  <script>
+      function subscribe() {
+          var email = document.getElementById('email').value;
+          if (email) {
+              alert('Thank you for subscribing with ' + email);
+              document.getElementById('email').value = '';  // Clear input after submission
+          } else {
+              alert('Please enter a valid email address.');
+          }
+      }
+  </script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const isLoggedIn = localStorage.getItem('isLoggedIn');
+    if (isLoggedIn === 'true') {
+        // Hide the login button and show the account dropdown
+        document.getElementById('loginButton').classList.add('d-none');
+        document.getElementById('accountDropdown').classList.remove('d-none');
+    }
+
+    // Add click event to toggle dropdown for account icon
+    const accountIcon = document.getElementById('accountIcon');
+    accountIcon.addEventListener('click', function() {
+        const dropdownMenu = document.getElementById('accountDropdown').querySelector('.dropdown-menu');
+        dropdownMenu.classList.toggle('show');
+    });
+});
+
+// Simulate user logout
+function userLogout() {
+    // Set login state to false
+    localStorage.setItem('isLoggedIn', 'false');
+    // Show the login button
+    document.getElementById('loginButton').classList.remove('d-none');
+    // Hide the account dropdown
+    document.getElementById('accountDropdown').classList.add('d-none');
+}
+
+</script>
+  
+<!-- bootstrap js  -->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+
+<!-- Include Bootstrap JS and dependencies -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+  
